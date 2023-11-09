@@ -1,0 +1,1 @@
+# smart-garden-management-app
