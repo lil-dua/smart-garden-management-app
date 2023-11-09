@@ -1,0 +1,9 @@
+<resources >
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SmartGardenApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/primary_background</item>
+    </style>
+
+    <style name="Theme.SmartGardenApp" parent="Base.Theme.SmartGardenApp" />
+</resources>

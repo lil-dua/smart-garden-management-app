@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="plant"
+            type="com.advanced.smartgardenapp.data.model.Plant" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16sp">
+
+        <ImageView
+            android:id="@+id/image_plant"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="13sp"
+            android:src="@drawable/image_plant_1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view_bottom"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_plant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="12sp"
+            android:textSize="21sp"
+            android:text="@{plant.name}"
+            android:textColor="@color/secondary_text"
+            android:textStyle="bold"
+            android:fontFamily="@font/lato_regular"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_plant"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12sp"
+            android:layout_marginTop="5.5dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/lato_regular"
+            android:textColor="@color/primary_background"
+            android:text="@{plant.dayPlant}"
+            app:layout_constraintTop_toBottomOf="@id/text_plant_name"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/ic_plant_info"
+            app:layout_constraintBottom_toBottomOf="@id/text_plant_name"
+            app:layout_constraintTop_toTopOf="@id/text_plant_name"
+            app:layout_constraintStart_toEndOf="@id/text_plant_name"/>
+
+        <View
+            android:id="@+id/view_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1A06492C"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
