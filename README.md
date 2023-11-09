@@ -1,10 +1,12 @@
 # smart-garden-management-app
 
 Login & Register
+
 <img src="screenshot/Screenshot_1.png" width = "250" >   <img src="screenshot/Screenshot_2.png" width = "250" >   <img src="screenshot/Screenshot_3.png" width = "250" >
 
 
 Home
+
 <img src="screenshot/Screenshot_4.png" width = "250" >  <img src="screenshot/Screenshot_5.png" width = "250" >  
 
 
