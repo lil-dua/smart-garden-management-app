@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "829479286333",
+    "firebase_url": "https://farm-fan-default-rtdb.firebaseio.com",
+    "project_id": "farm-fan",
+    "storage_bucket": "farm-fan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:829479286333:android:d3407ddbd3feb81f489c54",
+        "android_client_info": {
+          "package_name": "com.advanced.smartgardenapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt2myR5LZlCvcfSEq5dqz4Zb4hBCGpqhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,10 +10,7 @@ import com.advanced.smartgardenapp.R
 import com.advanced.smartgardenapp.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment : Fragment() {
-
     private lateinit var binding: FragmentWelcomeBinding
-    private lateinit var viewModel: WelcomeViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

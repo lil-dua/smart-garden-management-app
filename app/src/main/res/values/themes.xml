@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.SmartGardenApp" parent="Base.Theme.SmartGardenApp" />
+
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/primary_icon</item>
+    </style>
 </resources>
