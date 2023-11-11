@@ -23,6 +23,8 @@ object Constants {
     const val KEY_SET_TIME_1 = "SetTime1"
     const val KEY_SET_TIME_2 = "SetTime2"
     const val KEY_SET_TIME_3 = "SetTime3"
+    const val KEY_FAN = "fan"
+    const val KEY_PUMP = "pump"
 
     const val KEY_PUMP_STATUS = "PumpStatus"
     const val KEY_RAIN_SENSOR_1 = "RainSensor1"

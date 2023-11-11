@@ -31,4 +31,11 @@
     <string name="using_6_out_9_pods">Using 6 out 9 pods</string>
     <string name="basil_will_be_ready_for_harvest_in_3_days">Basil will be ready for harvest in 3 days</string>
     <string name="growing_now">Growing now</string>
+    <string name="automatically">Automatically</string>
+    <string name="set">SET</string>
+    <string name="set_time_for_water_pump_in_day">Set Time For Water Pump In Day</string>
+    <string name="enable">Enable</string>
+    <string name="select_time">Select Time</string>
+    <string name="sunny">Sunny</string>
+    <string name="raining">Raining</string>
 </resources>
