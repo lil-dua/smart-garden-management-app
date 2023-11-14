@@ -38,7 +38,7 @@ class HomeViewModel : ViewModel() {
 
     // Actual temperature -----------------------------------------------------------------------------
     private val temperatureReference: DatabaseReference = database.getReference(Constants.KEY_ACTUAL_TEMPERATURE)
-    val temperature: MutableLiveData<String?> = MutableLiveData()
+    val temperature: MutableLiveData<Long?> = MutableLiveData()
     fun fetchActualTemperatureValue() {
         GlobalScope.launch(Dispatchers.IO) {
             temperatureReference.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -46,7 +46,7 @@ class HomeViewModel : ViewModel() {
                     if (snapshot.exists()) {
                         val actualTemperature = snapshot.getValue(Long::class.java)
                         GlobalScope.launch(Dispatchers.Main) {
-                            temperature.value = actualTemperature.toString()
+                            temperature.value = actualTemperature
                         }
                     }
                 }
@@ -356,5 +356,29 @@ class HomeViewModel : ViewModel() {
             checkBox3Reference.setValue(newValue)
         }
     }
+
+
+    //Fetch rain sensor status
+    private val rainSensorReference = database.getReference(Constants.KEY_RAIN_SENSOR)
+    val rainSensor: MutableLiveData<String?> = MutableLiveData()
+    fun fetchRainSensorStatus() {
+        GlobalScope.launch(Dispatchers.IO) {
+            rainSensorReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val rainSensorState = snapshot.getValue(String::class.java)
+                        GlobalScope.launch(Dispatchers.Main) {
+                            rainSensor.value = rainSensorState
+                        }
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle error
+                }
+            })
+        }
+    }
+
+
 
 }

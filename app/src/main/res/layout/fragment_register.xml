@@ -73,7 +73,7 @@
             android:id="@+id/layout_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="12dp"
             android:textColorHint="@color/white"
             android:hint="@string/password"
             app:cursorColor="@color/white"
@@ -100,6 +100,37 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColorHint="@color/white"
+            android:hint="@string/confirm_password"
+            app:cursorColor="@color/white"
+            app:hintTextColor="@color/white"
+            app:boxStrokeColor="@color/white"
+            app:placeholderTextColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            android:foregroundTint="@color/white"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white"
+            android:layout_marginHorizontal="24dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_confirm_password"
+                android:textSize="17sp"
+                android:drawableStart="@drawable/ic_password"
+                android:drawableTint="@color/white"
+                android:drawablePadding="20sp"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <TextView
             android:id="@+id/text_another_login"
             android:layout_width="wrap_content"
@@ -111,7 +142,7 @@
             android:layout_marginTop="48dp"
             android:layout_marginStart="24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_password"/>
+            app:layout_constraintTop_toBottomOf="@id/layout_confirm_password"/>
 
         <TextView
             android:id="@+id/text_facebook"
@@ -155,7 +186,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary_background"
             android:gravity="center"
-            android:layout_marginTop="87dp"
+            android:layout_marginTop="57dp"
             android:onClick="@{() -> registerFragment.register()}"
             android:layout_marginBottom="32dp"
             app:layout_constraintStart_toStartOf="parent"

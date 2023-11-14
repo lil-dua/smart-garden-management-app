@@ -2,16 +2,21 @@ package com.advanced.smartgardenapp.ui.home
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.advanced.smartgardenapp.R
 import com.advanced.smartgardenapp.data.model.Datasource
 import com.advanced.smartgardenapp.databinding.FragmentHomeBinding
 import com.advanced.smartgardenapp.ui.home.garden.GardenAdapter
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
@@ -21,6 +26,10 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: GardenAdapter
     private lateinit var viewModel: HomeViewModel
 
+    //check time
+    private lateinit var handler: Handler
+    private lateinit var runnable: Runnable
+    private lateinit var setTimes: MutableList<String>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,6 +75,20 @@ class HomeFragment : Fragment() {
                 binding.textSetTime3.text = it
             }
 
+            // Initialize the list of set times
+            setTimes = mutableListOf()
+            // Initialize handler and runnable for checking time periodically
+            handler = Handler(Looper.getMainLooper())
+            runnable = object : Runnable {
+                override fun run() {
+                    if (checkTime()) {
+                        viewModel.setWaterPumpStatusValue("1")
+                        binding.switchWaterPump.isChecked = true
+                        binding.textWaterPumpStatus.text = "On"
+                    }
+                    handler.postDelayed(this, 1000 * 60) // Run every minute
+                }
+            }
 
             viewModel.fetchActualHumidityValue()
             viewModel.fetchActualTemperatureValue()
@@ -81,6 +104,31 @@ class HomeFragment : Fragment() {
             checkAutoFan()
             checkEnableCheckBox()
             setTimeCheckBoxListener()
+            checkRaining()
+        }
+    }
+
+
+
+    fun goToDiagram() {
+        findNavController().navigate(R.id.action_homeFragment_to_diagramFragment)
+    }
+
+    fun logout() {
+        Toast.makeText(requireContext(),"Logout...!", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_homeFragment_to_welcomeFragment)
+    }
+
+    private fun checkRaining() {
+        viewModel.fetchRainSensorStatus()
+        viewModel.rainSensor.observe(viewLifecycleOwner) {
+            if (it?.toIntOrNull() == 1) {
+                binding.textWeather.setText(R.string.raining)
+                binding.viewWeather.setImageResource(R.drawable.ic_rainning)
+            }else {
+                binding.textWeather.setText(R.string.sunny)
+                binding.viewWeather.setImageResource(R.drawable.ic_sunny)
+            }
         }
     }
 
@@ -107,24 +155,34 @@ class HomeFragment : Fragment() {
     private fun setTimeCheckBoxListener() {
         //check box 1
         binding.checkboxWaterPump1.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
+            handleCheckboxChecked(isChecked,binding.textSetTime1,0)
+
+            if (isChecked) {  //if checkbox 1 is checked
                 viewModel.setCheckBox1Value("1")
             }else {
                 viewModel.setCheckBox1Value("0")
+                stopCheckingTime()
             }
         }
 
         //check box 2
         binding.checkboxWaterPump2.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckboxChecked(isChecked,binding.textSetTime2,1)
+
             if (isChecked) {
                 viewModel.setCheckBox2Value("1")
+                startCheckingTime()
+
             }else {
                 viewModel.setCheckBox2Value("0")
+                stopCheckingTime()
             }
         }
 
         //check box 3
         binding.checkboxWaterPump3.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckboxChecked(isChecked,binding.textSetTime3,2)
+
             if (isChecked) {
                 viewModel.setCheckBox3Value("1")
             }else {
@@ -157,9 +215,9 @@ class HomeFragment : Fragment() {
                 //handle logic for get temperature
                 viewModel.temperature.observe(viewLifecycleOwner) { temperature ->
                     viewModel.setTemperature.observe(viewLifecycleOwner) { setTemperature ->
-                        val intValue = setTemperature?.replace("\"", "")?.toIntOrNull()
+                        val longValue = setTemperature?.replace("\"", "")?.toLongOrNull()
                         if (temperature != null) {
-                            if (temperature.toIntOrNull() ?: 0 > intValue!!) {
+                            if (temperature > longValue!!) {
                                 //if temperature > 20 -> fan status is on
                                 binding.textFanStatus.text = "On"
                                 binding.switchFan.isChecked = true
@@ -262,8 +320,61 @@ class HomeFragment : Fragment() {
             minute,
             true
         )
-
         timePickerDialog.show()
+    }
+
+    private fun getCurrentTime(): String {
+        val currentTime = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        return dateFormat.format(currentTime)
+    }
+
+    private fun checkTime(): Boolean {
+        val currentTime = getCurrentTime()
+        for (setTime in setTimes) {
+            if (setTime == currentTime) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun startCheckingTime() {
+        handler.post(runnable)
+    }
+
+    private fun stopCheckingTime() {
+        handler.removeCallbacks(runnable)
+    }
+
+    private fun addSetTime(time: String) {
+        setTimes.add(time)
+        // Start checking time periodically if it's the first set time
+        if (setTimes.size == 1) {
+            startCheckingTime()
+        }
+    }
+
+    private fun removeSetTime(index: Int) {
+        if (index >= 0 && index < setTimes.size) {
+            setTimes.removeAt(index)
+            // Stop checking time if there are no set times
+            if (setTimes.isEmpty()) {
+                stopCheckingTime()
+            }
+        }
+        // Stop checking time if there are no set times
+        if (setTimes.isEmpty()) {
+            stopCheckingTime()
+        }
+    }
+
+    private fun handleCheckboxChecked(isChecked: Boolean, time: TextView, index: Int) {
+        if (isChecked) {
+            addSetTime(time.text.toString())
+        }else {
+            removeSetTime(index)
+        }
     }
 
 }

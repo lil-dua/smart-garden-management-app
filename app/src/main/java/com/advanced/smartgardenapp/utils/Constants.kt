@@ -7,12 +7,8 @@ object Constants {
     const val KEY_GARDEN_ID = "gardenId"
 
     //Key firebase field
-    const val KEY_DEFAULT_PATH = "https://farm-fan-default-rtdb.firebaseio.com/"
-    const val KEY_ACTUAL_HUMIDITY = "ActualHumi1"       //key main
+    const val KEY_ACTUAL_HUMIDITY = "ActualHumi1"
     const val KEY_ACTUAL_TEMPERATURE = "ActualTemp1"
-    const val KEY_AVERAGE_HUMIDITY = "AverageHumi_Day"
-    const val KEY_AVERAGE_TEMPERATURE = "AverageTemp_Day"
-
     const val KEY_FIELD_GET_DATA = "GetData"
     const val KEY_CHECK_AUTO = "CheckAuto"
     const val KEY_CHECK_BOX_1 = "CheckBox1"
@@ -25,7 +21,13 @@ object Constants {
     const val KEY_SET_TIME_3 = "SetTime3"
     const val KEY_FAN = "fan"
     const val KEY_PUMP = "pump"
+    const val KEY_RAIN_SENSOR = "RainSensor1"
 
-    const val KEY_PUMP_STATUS = "PumpStatus"
-    const val KEY_RAIN_SENSOR_1 = "RainSensor1"
+    //URL Diagram
+    const val KEY_DIAGRAM_URL = "https://thingspeak.com/channels/1236409?fbclid=IwAR0jMdxfpkj7k5txEixrE9BmHi86vw142xyHK9lBwiTkBitdKZ33eNnADnY"
+
+    //Authentication
+    const val KEY_USER = "users"
+    const val KEY_EMAIL = "email"
+    const val KEY_PASSWORD = "password"
 }

@@ -17,6 +17,20 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_homeFragment_to_diagramFragment"
+            app:destination="@id/diagramFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_homeFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -76,4 +90,9 @@
         android:name="com.advanced.smartgardenapp.ui.details.GardenDetailFragment"
         android:label="GardenDetailFragment"
         tools:layout="@layout/fragment_garden_detail"/>
+    <fragment
+        android:id="@+id/diagramFragment"
+        android:name="com.advanced.smartgardenapp.ui.diagram.DiagramFragment"
+        android:label="DiagramFragment"
+        tools:layout="@layout/fragment_diagram"/>
 </navigation>

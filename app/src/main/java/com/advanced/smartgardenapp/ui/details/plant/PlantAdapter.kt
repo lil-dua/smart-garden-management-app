@@ -17,6 +17,7 @@ class PlantAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(plant: Plant) {
             binding.plant = plant
+            binding.imagePlant.setImageResource(plant.image)
         }
     }
 

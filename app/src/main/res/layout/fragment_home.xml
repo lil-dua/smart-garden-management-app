@@ -33,6 +33,32 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
+            <ImageView
+                android:id="@+id/image_graph"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_graph"
+                android:padding="8dp"
+                android:layout_marginEnd="8dp"
+                app:tint="@color/white"
+                android:onClick="@{() -> homeFragment.goToDiagram()}"
+                app:layout_constraintEnd_toStartOf="@id/image_logout"
+                app:layout_constraintTop_toTopOf="@id/text_title"
+                android:background="@drawable/background_button_set"/>
+
+            <ImageView
+                android:id="@+id/image_logout"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_logout"
+                android:padding="8dp"
+                android:layout_marginEnd="24dp"
+                app:tint="@color/white"
+                android:onClick="@{() -> homeFragment.logout()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_title"
+                android:background="@drawable/background_button_set"/>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycle_view_garden"

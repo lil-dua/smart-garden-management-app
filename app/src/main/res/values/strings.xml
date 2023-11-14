@@ -38,4 +38,7 @@
     <string name="select_time">Select Time</string>
     <string name="sunny">Sunny</string>
     <string name="raining">Raining</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="confirm_password">Confirm password</string>
 </resources>
