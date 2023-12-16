@@ -11,6 +11,7 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+//MVVM - Model View ViewModel
 
 class HomeViewModel : ViewModel() {
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -31,6 +32,7 @@ class HomeViewModel : ViewModel() {
                 }
                 override fun onCancelled(error: DatabaseError) {
                     // Handle error
+
                 }
             })
         }
@@ -81,6 +83,7 @@ class HomeViewModel : ViewModel() {
         }
     }
     fun setFanStatusValue(newValue: String) {
+        //sử dụng Coroutine trong Kotlin để tránh block UI Main Thread, chạy trong luồng IO
         GlobalScope.launch(Dispatchers.IO) {
             fanStatusReference.setValue(newValue)
         }

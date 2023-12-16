@@ -57,6 +57,7 @@ class HomeFragment : Fragment() {
             viewModel.temperature.observe(viewLifecycleOwner) {
                 binding.textActualTemperature.text = "$it°c"
             }
+
             viewModel.setHumidity.observe(viewLifecycleOwner) {
                 binding.editHumidity.setText(it)
             }
@@ -101,10 +102,10 @@ class HomeFragment : Fragment() {
             //set actions
             setFanStatus()
             setWaterPumpStatus()
-            checkAutoFan()
-            checkEnableCheckBox()
-            setTimeCheckBoxListener()
-            checkRaining()
+            checkAutoFan()  //check automatically of fan
+            checkEnableCheckBox()    //check status of checkbox
+            setTimeCheckBoxListener()  //set time if checkbox is checked
+            checkRaining()   //check status for raining or sunny
         }
     }
 
@@ -311,6 +312,7 @@ class HomeFragment : Fragment() {
                 val formattedTime = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute)
                 textView.text = formattedTime
                 when(textView) {
+                    //check textView == binding.textSetTime1 ?
                     binding.textSetTime1 -> viewModel.setTime1Value(formattedTime)
                     binding.textSetTime2 -> viewModel.setTime2Value(formattedTime)
                     binding.textSetTime3 -> viewModel.setTime3Value(formattedTime)
