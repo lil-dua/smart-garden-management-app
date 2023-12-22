@@ -79,17 +79,17 @@ class HomeFragment : Fragment() {
             // Initialize the list of set times
             setTimes = mutableListOf()
             // Initialize handler and runnable for checking time periodically
-            handler = Handler(Looper.getMainLooper())
-            runnable = object : Runnable {
-                override fun run() {
-                    if (checkTime()) {
-                        viewModel.setWaterPumpStatusValue("1")
-                        binding.switchWaterPump.isChecked = true
-                        binding.textWaterPumpStatus.text = "On"
-                    }
-                    handler.postDelayed(this, 1000 * 60) // Run every minute
-                }
-            }
+//            handler = Handler(Looper.getMainLooper())
+//            runnable = object : Runnable {
+//                override fun run() {
+//                    if (checkTime()) {
+//                        viewModel.setWaterPumpStatusValue("1")
+//                        binding.switchWaterPump.isChecked = true
+//                        binding.textWaterPumpStatus.text = "On"
+//                    }
+//                    handler.postDelayed(this, 1000 * 60) // Run every minute
+//                }
+//            }
 
             viewModel.fetchActualHumidityValue()
             viewModel.fetchActualTemperatureValue()
@@ -98,6 +98,9 @@ class HomeFragment : Fragment() {
             viewModel.fetchSetTime1Value()
             viewModel.fetchSetTime2Value()
             viewModel.fetchSetTime3Value()
+            viewModel.fetchWaterPumpStatusValue()
+            viewModel.fetchFanStatusValue()
+            viewModel.fetchRainSensorStatus()
 
             //set actions
             setFanStatus()
@@ -156,33 +159,32 @@ class HomeFragment : Fragment() {
     private fun setTimeCheckBoxListener() {
         //check box 1
         binding.checkboxWaterPump1.setOnCheckedChangeListener { _, isChecked ->
-            handleCheckboxChecked(isChecked,binding.textSetTime1,0)
+//            handleCheckboxChecked(isChecked,binding.textSetTime1,0)
 
             if (isChecked) {  //if checkbox 1 is checked
                 viewModel.setCheckBox1Value("1")
             }else {
                 viewModel.setCheckBox1Value("0")
-                stopCheckingTime()
+//                stopCheckingTime()
             }
         }
-
-        //check box 2
+//
+//        //check box 2
         binding.checkboxWaterPump2.setOnCheckedChangeListener { _, isChecked ->
-            handleCheckboxChecked(isChecked,binding.textSetTime2,1)
-
+//            handleCheckboxChecked(isChecked,binding.textSetTime2,1)
             if (isChecked) {
                 viewModel.setCheckBox2Value("1")
-                startCheckingTime()
+//                startCheckingTime()
 
             }else {
                 viewModel.setCheckBox2Value("0")
-                stopCheckingTime()
+//                stopCheckingTime()
             }
         }
 
         //check box 3
         binding.checkboxWaterPump3.setOnCheckedChangeListener { _, isChecked ->
-            handleCheckboxChecked(isChecked,binding.textSetTime3,2)
+//            handleCheckboxChecked(isChecked,binding.textSetTime3,2)
 
             if (isChecked) {
                 viewModel.setCheckBox3Value("1")
@@ -214,24 +216,24 @@ class HomeFragment : Fragment() {
                 binding.checkboxAutoFan.isChecked = true
 
                 //handle logic for get temperature
-                viewModel.temperature.observe(viewLifecycleOwner) { temperature ->
-                    viewModel.setTemperature.observe(viewLifecycleOwner) { setTemperature ->
-                        val longValue = setTemperature?.replace("\"", "")?.toLongOrNull()
-                        if (temperature != null) {
-                            if (temperature > longValue!!) {
-                                //if temperature > 20 -> fan status is on
-                                binding.textFanStatus.text = "On"
-                                binding.switchFan.isChecked = true
-                                viewModel.setFanStatusValue("1")
-                            }else {
-                                //else temperature <= 20 -> fan status is off
-                                binding.textFanStatus.text = "Off"
-                                binding.switchFan.isChecked = false
-                                viewModel.setFanStatusValue("0")
-                            }
-                        }
-                    }
-                }
+//                viewModel.temperature.observe(viewLifecycleOwner) { temperature ->
+//                    viewModel.setTemperature.observe(viewLifecycleOwner) { setTemperature ->
+//                        val longValue = setTemperature?.replace("\"", "")?.toLongOrNull()
+//                        if (temperature != null) {
+//                            if (temperature > longValue!!) {
+//                                //if temperature > 20 -> fan status is on
+//                                binding.textFanStatus.text = "On"
+//                                binding.switchFan.isChecked = true
+//                                viewModel.setFanStatusValue("1")
+//                            }else {
+//                                //else temperature <= 20 -> fan status is off
+//                                binding.textFanStatus.text = "Off"
+//                                binding.switchFan.isChecked = false
+//                                viewModel.setFanStatusValue("0")
+//                            }
+//                        }
+//                    }
+//                }
 
             }else {
                 viewModel.setCheckAutoFanStatusValue("0")
@@ -325,58 +327,72 @@ class HomeFragment : Fragment() {
         timePickerDialog.show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchActualHumidityValue()
+        viewModel.fetchActualTemperatureValue()
+        viewModel.fetchSetHumidityValue()
+        viewModel.fetchSetTemperatureValue()
+        viewModel.fetchSetTime1Value()
+        viewModel.fetchSetTime2Value()
+        viewModel.fetchSetTime3Value()
+        viewModel.fetchWaterPumpStatusValue()
+        viewModel.fetchFanStatusValue()
+        viewModel.fetchRainSensorStatus()
+    }
+
     private fun getCurrentTime(): String {
         val currentTime = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         return dateFormat.format(currentTime)
     }
-
-    private fun checkTime(): Boolean {
-        val currentTime = getCurrentTime()
-        for (setTime in setTimes) {
-            if (setTime == currentTime) {
-                return true
-            }
-        }
-        return false
-    }
-
-    private fun startCheckingTime() {
-        handler.post(runnable)
-    }
-
-    private fun stopCheckingTime() {
-        handler.removeCallbacks(runnable)
-    }
-
-    private fun addSetTime(time: String) {
-        setTimes.add(time)
-        // Start checking time periodically if it's the first set time
-        if (setTimes.size == 1) {
-            startCheckingTime()
-        }
-    }
-
-    private fun removeSetTime(index: Int) {
-        if (index >= 0 && index < setTimes.size) {
-            setTimes.removeAt(index)
-            // Stop checking time if there are no set times
-            if (setTimes.isEmpty()) {
-                stopCheckingTime()
-            }
-        }
-        // Stop checking time if there are no set times
-        if (setTimes.isEmpty()) {
-            stopCheckingTime()
-        }
-    }
-
-    private fun handleCheckboxChecked(isChecked: Boolean, time: TextView, index: Int) {
-        if (isChecked) {
-            addSetTime(time.text.toString())
-        }else {
-            removeSetTime(index)
-        }
-    }
+//
+//    private fun checkTime(): Boolean {
+//        val currentTime = getCurrentTime()
+//        for (setTime in setTimes) {
+//            if (setTime == currentTime) {
+//                return true
+//            }
+//        }
+//        return false
+//    }
+//
+//    private fun startCheckingTime() {
+//        handler.post(runnable)
+//    }
+//
+//    private fun stopCheckingTime() {
+//        handler.removeCallbacks(runnable)
+//    }
+//
+//    private fun addSetTime(time: String) {
+//        setTimes.add(time)
+//        // Start checking time periodically if it's the first set time
+//        if (setTimes.size == 1) {
+//            startCheckingTime()
+//        }
+//    }
+//
+//    private fun removeSetTime(index: Int) {
+//        if (index >= 0 && index < setTimes.size) {
+//            setTimes.removeAt(index)
+//            // Stop checking time if there are no set times
+//            if (setTimes.isEmpty()) {
+//                stopCheckingTime()
+//            }
+//        }
+//        // Stop checking time if there are no set times
+//        if (setTimes.isEmpty()) {
+//            stopCheckingTime()
+//        }
+//    }
+//
+//    private fun handleCheckboxChecked(isChecked: Boolean, time: TextView, index: Int) {
+//        if (isChecked) {
+//            addSetTime(time.text.toString())
+//        }else {
+//            removeSetTime(index)
+//        }
+//    }
 
 }

@@ -95,9 +95,10 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="20sp"
+                android:inputType="textPassword"
                 android:drawableTint="@color/white"
                 android:textColor="@color/white"
-                android:textSize="17sp"></com.google.android.material.textfield.TextInputEditText>
+                android:textSize="17sp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

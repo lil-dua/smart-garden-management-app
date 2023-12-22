@@ -21,7 +21,7 @@ class HomeViewModel : ViewModel() {
     val humidity: MutableLiveData<String?> = MutableLiveData()
     fun fetchActualHumidityValue() {
         GlobalScope.launch(Dispatchers.IO) {
-            humidityReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            humidityReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val actualHumidity = snapshot.getValue(Long::class.java)
@@ -43,7 +43,7 @@ class HomeViewModel : ViewModel() {
     val temperature: MutableLiveData<Long?> = MutableLiveData()
     fun fetchActualTemperatureValue() {
         GlobalScope.launch(Dispatchers.IO) {
-            temperatureReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            temperatureReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val actualTemperature = snapshot.getValue(Long::class.java)
@@ -67,7 +67,7 @@ class HomeViewModel : ViewModel() {
     val fanStatus: MutableLiveData<String?> = MutableLiveData()
     fun fetchFanStatusValue() {
         GlobalScope.launch(Dispatchers.IO) {
-            fanStatusReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            fanStatusReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val fanStatusValue = snapshot.getValue(String::class.java)
@@ -93,7 +93,7 @@ class HomeViewModel : ViewModel() {
     val checkAutoFanStatus: MutableLiveData<String?> = MutableLiveData()
     fun fetchCheckAutoFanStatusValue() {
         GlobalScope.launch(Dispatchers.IO) {
-            checkAutoFanStatusReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            checkAutoFanStatusReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val checkAutoFanStatusValue = snapshot.getValue(String::class.java)
@@ -120,7 +120,7 @@ class HomeViewModel : ViewModel() {
     val waterPumpStatus: MutableLiveData<String?> = MutableLiveData()
     fun fetchWaterPumpStatusValue() {
         GlobalScope.launch(Dispatchers.IO) {
-            waterPumpStatusReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            waterPumpStatusReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val waterPumpStatusValue = snapshot.getValue(String::class.java)
@@ -147,7 +147,7 @@ class HomeViewModel : ViewModel() {
     val setTemperature: MutableLiveData<String?> = MutableLiveData()
     fun fetchSetTemperatureValue() {
         GlobalScope.launch(Dispatchers.IO) {
-            setTemperatureReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            setTemperatureReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val setTemperatureValue = snapshot.getValue(String::class.java)
@@ -174,7 +174,7 @@ class HomeViewModel : ViewModel() {
 
     fun fetchSetHumidityValue() {
         GlobalScope.launch(Dispatchers.IO) {
-            setHumidityReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            setHumidityReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val setHumidityValue = snapshot.getValue(String::class.java)
@@ -202,7 +202,7 @@ class HomeViewModel : ViewModel() {
 
     fun fetchSetTime1Value() {
         GlobalScope.launch(Dispatchers.IO) {
-            setTime1Reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            setTime1Reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val setTime1Value = snapshot.getValue(String::class.java)
@@ -229,7 +229,7 @@ class HomeViewModel : ViewModel() {
 
     fun fetchSetTime2Value() {
         GlobalScope.launch(Dispatchers.IO) {
-            setTime2Reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            setTime2Reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val setTime2Value = snapshot.getValue(String::class.java)
@@ -256,7 +256,7 @@ class HomeViewModel : ViewModel() {
 
     fun fetchSetTime3Value() {
         GlobalScope.launch(Dispatchers.IO) {
-            setTime3Reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            setTime3Reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val setTime3Value = snapshot.getValue(String::class.java)
@@ -284,7 +284,7 @@ class HomeViewModel : ViewModel() {
 
     fun fetchCheckBox1State() {
         GlobalScope.launch(Dispatchers.IO) {
-            checkBox1Reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            checkBox1Reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val checkBox1Value = snapshot.getValue(String::class.java)
@@ -311,7 +311,7 @@ class HomeViewModel : ViewModel() {
 
     fun fetchCheckBox2State() {
         GlobalScope.launch(Dispatchers.IO) {
-            checkBox2Reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            checkBox2Reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val checkBox2Value = snapshot.getValue(String::class.java)
@@ -338,7 +338,7 @@ class HomeViewModel : ViewModel() {
 
     fun fetchCheckBox3State() {
         GlobalScope.launch(Dispatchers.IO) {
-            checkBox3Reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            checkBox3Reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val checkBox3Value = snapshot.getValue(String::class.java)
@@ -366,7 +366,7 @@ class HomeViewModel : ViewModel() {
     val rainSensor: MutableLiveData<String?> = MutableLiveData()
     fun fetchRainSensorStatus() {
         GlobalScope.launch(Dispatchers.IO) {
-            rainSensorReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            rainSensorReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         val rainSensorState = snapshot.getValue(String::class.java)
