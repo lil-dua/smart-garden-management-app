@@ -16,6 +16,7 @@ import com.advanced.smartgardenapp.R
 import com.advanced.smartgardenapp.data.model.Datasource
 import com.advanced.smartgardenapp.databinding.FragmentHomeBinding
 import com.advanced.smartgardenapp.ui.home.garden.GardenAdapter
+import com.advanced.smartgardenapp.utils.NotificationHelper
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -30,6 +31,9 @@ class HomeFragment : Fragment() {
     private lateinit var handler: Handler
     private lateinit var runnable: Runnable
     private lateinit var setTimes: MutableList<String>
+
+    //notification
+    private lateinit var notificationHelper: NotificationHelper
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,10 +45,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            //init
             lifecycleOwner = viewLifecycleOwner
             homeFragment = this@HomeFragment
             viewModel = ViewModelProvider(this@HomeFragment)[HomeViewModel::class.java]
+            notificationHelper = NotificationHelper(
+                context = context?.applicationContext ?: requireContext(),
+                activity = requireActivity()
+            )
 
+            // load garden data
             val data = Datasource().loadGarden()
             adapter = GardenAdapter(data,findNavController())
             binding.recycleViewGarden.adapter = adapter
@@ -125,8 +135,13 @@ class HomeFragment : Fragment() {
 
     private fun checkRaining() {
         viewModel.fetchRainSensorStatus()
-        viewModel.rainSensor.observe(viewLifecycleOwner) {
+        viewModel.rainSensor.observe(requireActivity()) {
             if (it?.toIntOrNull() == 1) {
+                //show raining notification
+                notificationHelper.showNotification(
+                    title = "Raining",
+                    content = "Weather is raining"
+                )
                 binding.textWeather.setText(R.string.raining)
                 binding.viewWeather.setImageResource(R.drawable.ic_rainning)
             }else {
@@ -247,6 +262,11 @@ class HomeFragment : Fragment() {
         viewModel.fetchWaterPumpStatusValue()
         viewModel.waterPumpStatus.observe(viewLifecycleOwner) {
             if(it?.toIntOrNull() == 1) {
+                //show water pump notification
+                notificationHelper.showNotification(
+                    title = "Water pump is enabled",
+                    content = "The pump is on, you can turn it off at any time."
+                )
                 binding.textWaterPumpStatus.text = "On"
                 binding.switchWaterPump.isChecked = true
             }else {
@@ -273,6 +293,11 @@ class HomeFragment : Fragment() {
         viewModel.fetchFanStatusValue()
         viewModel.fanStatus.observe(viewLifecycleOwner) {
             if(it?.toIntOrNull() == 1) {
+                //show fan notification
+                notificationHelper.showNotification(
+                    title = "Fan is enabled",
+                    content = "The fan is on, you can turn it off at any time."
+                )
                 binding.textFanStatus.text = "On"
                 binding.switchFan.isChecked = true
             }else {

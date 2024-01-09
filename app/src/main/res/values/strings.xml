@@ -41,4 +41,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="confirm_password">Confirm password</string>
+
+
+    <string name="title_raining">Raining</string>
+    <string name="content_raining">Weather is raining</string>
+    <string name="title_sunny">Sunny</string>
+    <string name="content_sunny">Weather is sunny</string>
 </resources>
